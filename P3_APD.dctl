@@ -1,0 +1,19 @@
+// Converting P3-D65 linear data to APD(Academy Printing Density) response, in other words from P3-D65 color space to APD's own color space
+
+__CONSTANT__ float P3D65ToAPD[9] = {0.91289126f,  0.23086323f, -0.21623707f,
+                                    -0.02795929f,  0.63340891f,  0.03470275f,
+                                    0.00325228f,  0.00232736f,  0.92028927f};
+
+__DEVICE__ float3 transform(int p_Width, int p_Height, int p_X, int p_Y, float p_R, float p_G, float p_B)
+{ 
+    float3 result;
+
+    result.r = P3D65ToAPD[0] * p_R + P3D65ToAPD[1] * p_G + P3D65ToAPD[2] * p_B;
+
+    result.g = P3D65ToAPD[3] * p_R + P3D65ToAPD[4] * p_G + P3D65ToAPD[5] * p_B;
+
+    result.b = P3D65ToAPD[6] * p_R + P3D65ToAPD[7] * p_G + P3D65ToAPD[8] * p_B;
+
+    return result;
+
+}
